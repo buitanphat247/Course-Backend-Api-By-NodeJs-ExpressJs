@@ -1,0 +1,27 @@
+{
+  "name": "backend-course",
+  "version": "1.0.0",
+  "description": "Bui Tan Phat learn backend",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node sever.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buitanphat247/Course-Backend-NodeJS.git"
+  },
+  "keywords": [
+    "backend",
+    "nodejs"
+  ],
+  "author": "Bui Tan Phat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buitanphat247/Course-Backend-NodeJS/issues"
+  },
+  "homepage": "https://github.com/buitanphat247/Course-Backend-NodeJS#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
