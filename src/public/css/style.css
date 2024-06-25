@@ -1,0 +1,6 @@
+.image_content {
+  width: 150px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
