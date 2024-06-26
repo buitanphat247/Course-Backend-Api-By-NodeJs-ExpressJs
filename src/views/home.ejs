@@ -14,6 +14,33 @@
         <a class="active" href="/">Home</a>
         <a href="/create">Create user</a>
       </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% listUser.forEach((item, index) => { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.name %></td>
+              <td><%= item.email %></td>
+              <td><%= item.city %></td>
+              <td>
+                <button class="edit-btn">Edit</button>
+                <button class="remove-btn">Remove</button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

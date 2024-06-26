@@ -1,8 +1,14 @@
 const connection = require("../config/database");
 const bodyParser = require("body-parser");
+const { getAllUser } = require("../services/CrudService");
 
-const getHomePage = (req, res) => {
-  return res.render("home.ejs");
+const getHomePage = async (req, res) => {
+  try {
+    const results = await getAllUser();
+    return res.render("home.ejs", { listUser: results });
+  } catch (error) {
+    console.error(error);
+  }
 };
 const getAbc = (req, res) => {
   res.send("Hello World! vs Bui Tan Phat learn backend in route abc");
