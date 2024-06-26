@@ -10,22 +10,29 @@ const getAbc = (req, res) => {
 const getBuiTanPhat = (req, res) => {
   res.render("sample.ejs");
 };
-const postCreateUser = (req, res) => {
+const getCreateUserPage = (req, res) => {
+  res.render("create.ejs");
+};
+const postCreateUser = async (req, res) => {
   const { name, email, city } = req.body;
   const query = "INSERT INTO Users (email, name, city) VALUES (?, ?, ?)";
-
-  connection.query(query, [email, name, city], (err, result) => {
-    if (err) {
-      console.error("Error inserting user: ", err);
-      return res.status(500).send("Error inserting user");
-    }
-    console.log("Insertion results: ", result);
+  try {
+    const [results, fields] = await connection.query(query, [
+      email,
+      name,
+      city,
+    ]);
+    console.log(results);
     res.send("Create user successfully");
-  });
+  } catch (error) {
+    res.send(error);
+    console.error(error);
+  }
 };
 module.exports = {
   getHomePage,
   getAbc,
   getBuiTanPhat,
   postCreateUser,
+  getCreateUserPage,
 };
