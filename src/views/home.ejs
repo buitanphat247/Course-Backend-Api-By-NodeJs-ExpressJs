@@ -33,8 +33,12 @@
               <td><%= item.email %></td>
               <td><%= item.city %></td>
               <td>
-                <button class="edit-btn">Edit</button>
-                <button class="remove-btn">Remove</button>
+                <button class="edit-btn">
+                  <a href="/update?id=<%= item.id %>"> Edit</a>
+                </button>
+                <a href="/delete?id=<%= item.id %>">
+                  <button class="remove-btn">Remove</button>
+                </a>
               </td>
             </tr>
             <% }); %>
