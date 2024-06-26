@@ -24,7 +24,7 @@ const postCreateUser = async (req, res) => {
   try {
     const results = await createNewUser(req, res);
     console.log("results: ", results);
-    res.send("success");
+    res.redirect("/");
   } catch (error) {
     console.error(error);
   }
@@ -35,7 +35,7 @@ const postDeleteUser = async (req, res) => {
     const userId = req.query.id;
     const results = await deleteUserById(userId);
     console.log("results: ", results);
-    res.send("success");
+    res.redirect("/");
   } catch (error) {
     console.error(error);
   }
@@ -57,7 +57,7 @@ const postHandleUpdateUser = async (req, res) => {
     // const [results,fields]=await connection.query()
     const results = await handleUpdateUserById(req, res);
     console.log(results);
-    res.send("success");
+    res.redirect("/");
   } catch (err) {
     console.error(err);
   }
