@@ -10,9 +10,9 @@ const hostname = process.env.HOST_NAME || "localhost";
 configViewEngine(app);
 
 // test connection query
-connection.query("select * from Users ", function (err, results, fields) {
-  console.log(results);
-});
+// connection.query("select * from Users ", function (err, results, fields) {
+//   console.log(results);
+// });
 // khai báo route
 app.use("/", webRoutes);
 
