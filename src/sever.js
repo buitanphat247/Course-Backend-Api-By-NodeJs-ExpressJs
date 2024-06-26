@@ -11,6 +11,11 @@ app.use(express.json());
 
 configViewEngine(app);
 
+// test connection query
+// connection.query("select * from Users ", function (err, results, fields) {
+//   console.log(results);
+// });
+// khai báo route
 app.use("/", webRoutes);
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
