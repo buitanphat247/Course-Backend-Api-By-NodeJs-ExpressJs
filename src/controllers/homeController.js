@@ -1,73 +1,25 @@
-const connection = require("../config/database");
-const bodyParser = require("body-parser");
 const {
-  getAllUser,
-  createNewUser,
-  deleteUserById,
-  loadInforUserById,
-  handleUpdateUserById,
-} = require("../services/CrudService");
+  create_new_user,
+  get_data_home_page,
+  delete_user,
+} = require("../models/User");
 
 const getHomePage = async (req, res) => {
-  try {
-    const results = await getAllUser();
-    return res.render("home.ejs", { listUser: results });
-  } catch (error) {
-    console.error(error);
-  }
+  const results = await get_data_home_page();
+  if (results === false) res.render("home.ejs", { data: [] });
+  else res.render("home.ejs", { data: results });
 };
-
-const CreateUserPage = (req, res) => {
+const getCreatePage = (req, res) => {
   res.render("create.ejs");
 };
 const postCreateUser = async (req, res) => {
-  try {
-    const results = await createNewUser(req, res);
-    console.log("results: ", results);
-    res.redirect("/");
-  } catch (error) {
-    console.error(error);
-  }
+  const results = await create_new_user(req.body);
+  if (results === true) res.redirect("/");
+  else res.redirect("/create");
 };
 const postDeleteUser = async (req, res) => {
-  try {
-    // const results = await deleteUser(req, res);
-    const userId = req.query.id;
-    const results = await deleteUserById(userId);
-    console.log("results: ", results);
-    res.redirect("/");
-  } catch (error) {
-    console.error(error);
-  }
+  const { id } = req.query;
+  const results = await delete_user(id);
+  res.redirect("/");
 };
-
-const getInforUser = async (req, res) => {
-  try {
-    // const results = await deleteUser(req, res);
-    const userId = req.query.id;
-    const results = await loadInforUserById(userId);
-    console.log("results: ", results);
-    return res.render("update.ejs", { inforUser: results });
-  } catch (error) {
-    console.error(error);
-  }
-};
-const postHandleUpdateUser = async (req, res) => {
-  try {
-    // const [results,fields]=await connection.query()
-    const results = await handleUpdateUserById(req, res);
-    console.log(results);
-    res.redirect("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-module.exports = {
-  getHomePage,
-  postCreateUser,
-  CreateUserPage,
-  postDeleteUser,
-  getInforUser,
-  postHandleUpdateUser,
-};
+module.exports = { getCreatePage, getHomePage, postCreateUser, postDeleteUser };

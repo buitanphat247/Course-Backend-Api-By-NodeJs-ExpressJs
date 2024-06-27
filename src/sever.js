@@ -16,10 +16,7 @@ app.use(express.json());
 app.use("/", webRoutes);
 configViewEngine(app);
 
-// create data
-const cat = new Kitten({ name: "buitanphat" });
-// save data
-cat.save();
+
 
 (async () => {
   try {
