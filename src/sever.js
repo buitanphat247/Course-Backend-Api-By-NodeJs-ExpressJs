@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express"); // common js
+
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
 const connection = require("./config/database");
@@ -11,12 +12,16 @@ app.use(express.json());
 
 configViewEngine(app);
 
-// test connection query
-// connection.query("select * from Users ", function (err, results, fields) {
-//   console.log(results);
-// });
-// khai báo route
 app.use("/", webRoutes);
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+
+(async () => {
+  try {
+    await connection();
+
+    app.listen(port, hostname, () => {
+      console.log(`Backend app listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log("error connect to db: ", error);
+  }
+})();

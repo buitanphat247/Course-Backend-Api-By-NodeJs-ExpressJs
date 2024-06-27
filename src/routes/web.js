@@ -10,14 +10,15 @@ const {
 const router = express.Router();
 
 // khai báo route
-router.get("/", getHomePage);
-router.get("/create", CreateUserPage);
-router.get("/delete", postDeleteUser);
-router.get("/update", getInforUser);
+// router.get("/", getHomePage);
+// router.get("/create", CreateUserPage);
+// router.get("/delete", postDeleteUser);
+// router.get("/update", getInforUser);
 
+// router.post("/create-user", postCreateUser);
+// router.post("/update_user", postHandleUpdateUser);
 
-router.post("/create-user", postCreateUser);
-router.post("/update_user", postHandleUpdateUser);
-
-
+router.get("/", (req, res) => {
+  res.render("home.ejs");
+});
 module.exports = router;

@@ -25,24 +25,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <% listUser.forEach((item, index) => { %>
-            <tr>
-              <td><%= item.id %></td>
-              <td><%= item.name %></td>
-              <td><%= item.email %></td>
-              <td><%= item.city %></td>
-              <td>
-                <a href="/update?id=<%= item.id %>">
-                  <button class="edit-btn">Edit</button>
-                </a>
-                <a href="/delete?id=<%= item.id %>">
-                  <button class="remove-btn">Remove</button>
-                </a>
-              </td>
-            </tr>
-            <% }); %>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>
