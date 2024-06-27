@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
 const connection = require("./config/database");
+const Kitten = require("./models/Kitten");
+
+
 const app = express(); // app express
 const port = process.env.PORT || 8888; // port
 const hostname = process.env.HOST_NAME || "localhost";
@@ -12,12 +15,12 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use("/", webRoutes);
 configViewEngine(app);
-const kittySchema = new mongoose.Schema({
-  name: String,
-});
-const Kitten = mongoose.model("Kitten", kittySchema);
+
+// create data
 const cat = new Kitten({ name: "buitanphat" });
+// save data
 cat.save();
+
 (async () => {
   try {
     // test connection
