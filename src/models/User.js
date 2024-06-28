@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
-userSchema.plugin(AutoIncrement, { inc_field: "id" });
 const user_collection = mongoose.model("UserMange", userSchema);
 
 const get_data_home_page = async () => {
@@ -33,8 +32,7 @@ const get_data_home_page = async () => {
 
 const delete_user = async (id) => {
   try {
-    const results = await user_collection.findOneAndDelete({ id: id });
-    return true;
+    await user_collection.findOneAndDelete({ _id: id });
   } catch (error) {
     return false;
   }
@@ -48,11 +46,40 @@ const create_new_user = async (data) => {
       phoneNumber: data.phone,
       age: data.age,
     });
-    await new_user.save();
-    return true;
+    const saved_user = await new_user.save();
+    return saved_user;
   } catch (error) {
     return false;
   }
 };
-
-module.exports = { create_new_user, get_data_home_page, delete_user };
+const get_user_by_id = async (id) => {
+  try {
+    const results = await user_collection.findOne({ _id: id });
+    return results;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const update_user_by_id = async (id, data) => {
+  try {
+    const results = await user_collection.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          username: data.username,
+          email: data.email,
+          phoneNumber: data.phone,
+          age: data.age,
+        },
+      }
+    );
+    return results;
+  } catch (error) {}
+};
+module.exports = {
+  create_new_user,
+  get_data_home_page,
+  delete_user,
+  get_user_by_id,
+  update_user_by_id,
+};

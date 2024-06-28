@@ -83,9 +83,12 @@
                   <%= user.age %>
                 </td>
                 <td class="px-6 py-4 border-b border-gray-200">
-                  <button class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                  <a
+                    href="/update?id=<%=user.id%>"
+                    class="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  >
                     Edit
-                  </button>
+                  </a>
                   <a
                     href="/post-delete-user?id=<%=user.id%>"
                     class="bg-red-500 text-white px-4 py-2 rounded"

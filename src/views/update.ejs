@@ -8,43 +8,93 @@
   </head>
 
   <body>
-    <div>
-      <div class="topnav">
-        <a class="active" href="/">Home</a>
-        <a href="/create">Create user</a>
+    <div class="min-h-screen bg-gray-100">
+      <div class="bg-white shadow-md">
+        <div class="container mx-auto px-4">
+          <div class="flex justify-between items-center py-4">
+            <div class="topnav flex space-x-4">
+              <a
+                class="text-blue-500 hover:text-blue-700 font-semibold"
+                href="/"
+                >Home</a
+              >
+              <a class="text-gray-700 hover:text-blue-700" href="/create"
+                >Create user</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-container">
-        <form action="/update_user?id=<%= inforUser[0].id%>" method="POST">
-          <h2>Edit User by id: <%= inforUser[0].id %></h2>
-          <label for="name">Name:</label>
-          <input
-            type="text"
-            id="name_id"
-            name="name"
-            value="<%= inforUser[0].name %>"
-            required
-          />
-
-          <label for="email">Email:</label>
-          <input
-            type="email"
-            id="email_id"
-            name="email"
-            value="<%= inforUser[0].email %>"
-            required
-          />
-
-          <label for="city">City:</label>
-          <input
-            type="text"
-            id="city_id"
-            name="city"
-            value="<%= inforUser[0].city %>"
-            required
-          />
-
-          <button type="submit">Submit</button>
-        </form>
+      <div class="container mx-auto px-4 py-8">
+        <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold mb-6 text-center">User Information</h2>
+          <form method="post" action="/update?id=<%= data.id %>">
+            <div class="mb-4">
+              <label for="username" class="block text-gray-700 font-bold mb-2"
+                >Username</label
+              >
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value="<%= data.username %>"
+                required
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your username"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-gray-700 font-bold mb-2"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                required
+                name="email"
+                value="<%= data.email %>"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block text-gray-700 font-bold mb-2"
+                >Phone</label
+              >
+              <input
+                required
+                type="tel"
+                id="phone"
+                name="phone"
+                value="<%= data.phoneNumber %>"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your phone number"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="age" class="block text-gray-700 font-bold mb-2"
+                >Age</label
+              >
+              <input
+                type="number"
+                id="age"
+                required
+                value="<%= data.age %>"
+                name="age"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your age"
+              />
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </body>
