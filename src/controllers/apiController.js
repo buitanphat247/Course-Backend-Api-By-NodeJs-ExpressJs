@@ -1,9 +1,12 @@
+const path = require("path");
+
 const {
   get_data_home_page,
   create_new_user,
   update_user_by_id,
   delete_user,
 } = require("../models/User");
+const { upload_multiple_files } = require("../services/FileUpload");
 
 const get_all_users_api = async (req, res) => {
   try {
@@ -67,9 +70,45 @@ const delete_user_api_with_id = async (req, res) => {
     });
   }
 };
+// const post_upload_file = async (req, res) => {
+//   const results = await upload_single_file(req, res);
+//   if (results.error === 0) {
+//     res.status(200).json({
+//       error: 0,
+//       message: "File uploaded successfully.",
+//       data: results.data,
+//       path: results.path,
+//     });
+//   } else {
+//     res.status(500).json({
+//       error: 1,
+//       message: results.message,
+//     });
+//   }
+// };
+
+const post_upload_multiple_file = async (req, res) => {
+  const results = await upload_multiple_files(req, res);
+  if (results.error === 0) {
+    res.status(200).json({
+      error: 0,
+      message: "File uploaded successfully.",
+      data_success: results.data_succes,
+      data_fail: results.data_fail,
+      countSuccess: results.count,
+    });
+  } else {
+    res.status(500).json({
+      error: 1,
+      message: results.message,
+    });
+  }
+};
+
 module.exports = {
   get_all_users_api,
   post_user_api,
   put_user_api_with_id,
   delete_user_api_with_id,
+  post_upload_multiple_file,
 };

@@ -4,6 +4,8 @@ const {
   post_user_api,
   put_user_api_with_id,
   delete_user_api_with_id,
+  post_upload_file,
+  post_upload_multiple_file,
 } = require("../controllers/apiController");
 
 const apiRouter = express.Router();
@@ -12,5 +14,6 @@ apiRouter.get("/user", get_all_users_api);
 apiRouter.post("/user", post_user_api);
 apiRouter.put("/user", put_user_api_with_id);
 apiRouter.delete("/user", delete_user_api_with_id);
-
+// apiRouter.post("/upload", post_upload_file);
+apiRouter.post("/upload", post_upload_multiple_file);
 module.exports = apiRouter;
