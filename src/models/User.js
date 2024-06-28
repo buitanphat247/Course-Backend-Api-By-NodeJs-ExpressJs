@@ -76,6 +76,7 @@ const update_user_by_id = async (id, data) => {
     return results;
   } catch (error) {}
 };
+
 module.exports = {
   create_new_user,
   get_data_home_page,

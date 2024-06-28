@@ -7,6 +7,7 @@ const {
   delete_user,
 } = require("../models/User");
 const { upload_multiple_files } = require("../services/FileUpload");
+const { create_new_customer } = require("../models/customer");
 
 const get_all_users_api = async (req, res) => {
   try {
@@ -105,10 +106,26 @@ const post_upload_multiple_file = async (req, res) => {
   }
 };
 
+const post_customer_api = async (req, res) => {
+  const results = await create_new_customer(req, res);
+  if (results.error === 0) {
+    res.status(200).json({
+      error: 0,
+      message: "Customer created successfully.",
+      data: results.data,
+    });
+  } else {
+    res.status(500).json({
+      error: 1,
+      message: results.message,
+    });
+  }
+};
 module.exports = {
   get_all_users_api,
   post_user_api,
   put_user_api_with_id,
   delete_user_api_with_id,
   post_upload_multiple_file,
+  post_customer_api,
 };

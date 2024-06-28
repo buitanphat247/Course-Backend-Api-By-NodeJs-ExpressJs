@@ -35,41 +35,70 @@ const getNewFileName = (originalName) => {
 // };
 
 const upload_multiple_files = async (req, res) => {
-  let array_succes = [];
-  let array_fail = [];
-  let countSuccess = req.files.file.length;
-  req.files.file.map(async (item, index) => {
+  if (Array.isArray(req.files.file) === true) {
+    let array_succes = [];
+    let array_fail = [];
+    let countSuccess = req.files.file.length;
+    req.files.file.map(async (item, index) => {
+      try {
+        const file_name_avatar = await getNewFileName(item.name);
+        const uploadPath =
+          path.resolve(__dirname, "../") +
+          "/public/images/upload/" +
+          file_name_avatar;
+        array_succes.push({
+          originalName: item.name,
+          newName: file_name_avatar,
+          path: uploadPath,
+          size: item.size,
+          mimeType: item.mimetype,
+        });
+        await item.mv(uploadPath);
+      } catch (error) {
+        countSuccess--;
+        array_fail.push({
+          originalName: item.name,
+          newName: file_name_avatar,
+          path: null,
+          size: item.size,
+          mimeType: item.mimetype,
+        });
+      }
+    });
+    return {
+      error: 0,
+      data_succes: array_succes,
+      data_fail: array_fail,
+      count: countSuccess,
+    };
+  } else {
+    const file_avatar = req.files.file;
+    const file_name_avatar = await getNewFileName(file_avatar.name);
+    const uploadPath =
+      path.resolve(__dirname, "../") +
+      "/public/images/upload/" +
+      file_name_avatar;
     try {
-      const file_name_avatar = await getNewFileName(item.name);
-      const uploadPath =
-        path.resolve(__dirname, "../") +
-        "/public/images/upload/" +
-        file_name_avatar;
-      array_succes.push({
-        originalName: item.name,
-        newName: file_name_avatar,
-        path: uploadPath,
-        size: item.size,
-        mimeType: item.mimetype,
-      });
-      await item.mv(uploadPath);
+      await file_avatar.mv(uploadPath);
+      return {
+        error: 0,
+        data_succes: {
+          originalName: file_avatar.name,
+          newName: file_name_avatar,
+          path: uploadPath,
+          size: file_avatar.size,
+          mimeType: file_avatar.mimetype,
+        },
+        data_fail: [],
+        count: 1,
+      };
     } catch (error) {
-      countSuccess--;
-      array_fail.push({
-        originalName: item.name,
-        newName: file_name_avatar,
-        path: null,
-        size: item.size,
-        mimeType: item.mimetype,
-      });
+      return {
+        error: 1,
+        message: error,
+      };
     }
-  });
-  return {
-    error: 0,
-    data_succes: array_succes,
-    data_fail: array_fail,
-    count: countSuccess,
-  };
+  }
 };
 
 module.exports = { upload_multiple_files };

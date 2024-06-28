@@ -7,6 +7,7 @@ const webRoutes = require("./routes/web");
 const connection = require("./config/database");
 const apiRouter = require("./routes/api");
 const fileUpload = require("express-fileupload");
+const { customer_collection } = require("./models/customer");
 
 const app = express(); // app express
 const port = process.env.PORT || 8888; // port
@@ -22,6 +23,15 @@ configViewEngine(app);
   try {
     // test connection
     await connection();
+    // new customer_collection({
+    //   username: "buitanphat",
+    //   address: "buitanphat",
+    //   phone: "buitanphat",
+    //   email: "buitanphat",
+    //   image: null, // Adjust based on your file upload response structure
+    //   description: "buitanphat",
+    //   age: 12,
+    // }).save();
     app.listen(port, hostname, () => {
       console.log(`Backend app listening on port ${port}`);
     });
