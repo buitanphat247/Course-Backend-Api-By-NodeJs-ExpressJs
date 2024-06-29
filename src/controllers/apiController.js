@@ -8,7 +8,11 @@ const {
   upload_multiple_files,
   upload_single_file,
 } = require("../services/FileUpload");
-const { get_customer, post_customer } = require("../models/customer");
+const {
+  get_customer,
+  post_customer,
+  delete_customer,
+} = require("../models/customer");
 
 module.exports = {
   // API users
@@ -58,19 +62,12 @@ module.exports = {
     }
   },
   api_delete_user_with_id: async (req, res) => {
-    try {
-      const results = await delete_user(req.body.id);
-      res.status(200).json({
-        error: 0,
-        message: "User deleted successfully.",
-        data: results,
-      });
-    } catch (error) {
-      res.status(500).json({
-        error: 1,
-        message: "An error occurred while deleting the user.",
-      });
-    }
+    const results = await delete_user(req.body.id);
+    res.status(200).json({
+      error: 0,
+      message: "User deleted successfully.",
+      data: results,
+    });
   },
   // API upload file
   api_post_upload_multiple_file: async (req, res) => {
@@ -109,5 +106,13 @@ module.exports = {
       const results_create_customer = await post_customer(req, res, false);
       res.status(200).json(results_create_customer);
     }
+  },
+  api_delete_customer: async (req, res) => {
+    const results = await delete_customer(req, res);
+    res.status(200).json({
+      error: results.error,
+      message: results.message,
+      data: results.success,
+    });
   },
 };
