@@ -1,6 +1,7 @@
+const customer_collection = require("../models/customer");
 const { upload_single_file } = require("./FileUpload");
 
-const create_customer = async (req, res, customer_collection) => {
+const create_customer = async (req, res) => {
   try {
     const results = req.files?.file && (await upload_single_file(req, res));
     const data = await new customer_collection({
@@ -27,7 +28,7 @@ const create_customer = async (req, res, customer_collection) => {
     };
   }
 };
-const create_customer_list = async (req, res, customer_collection) => {
+const create_customer_list = async (req, res) => {
   const data_array = JSON.parse(req.body.data);
   const image = req.files?.file;
   const check_image_array = req.files?.file
@@ -60,5 +61,29 @@ const create_customer_list = async (req, res, customer_collection) => {
     success: data_success,
   };
 };
-
-module.exports = { create_customer_list, create_customer };
+const delete_single_customer = async (req, res, customer_collection) => {
+  try {
+    const result = await customer_collection.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        deleted: true,
+      }
+    );
+    return {
+      error: 0,
+      message: "delete success",
+      success: result,
+    };
+  } catch (error) {
+    return {
+      error: 1,
+      message: error,
+      success: [],
+    };
+  }
+};
+module.exports = {
+  create_customer,
+  create_customer_list,
+  delete_single_customer,
+};

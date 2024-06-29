@@ -11,6 +11,7 @@ const {
   api_get_customer_paginate,
   api_put_customer,
   api_get_customer_by_id,
+  api_post_project,
 } = require("../controllers/apiController");
 
 const apiRouter = express.Router();
@@ -29,4 +30,7 @@ apiRouter.post("/customer_list", api_post_customer);
 apiRouter.delete("/customer", api_delete_customer);
 apiRouter.put("/customer", api_put_customer);
 apiRouter.get("/customer_id", api_get_customer_by_id);
+// API project
+apiRouter.post("/project", api_post_project);
+
 module.exports = apiRouter;

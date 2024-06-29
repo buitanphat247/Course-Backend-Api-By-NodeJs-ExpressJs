@@ -8,14 +8,16 @@ const {
   upload_multiple_files,
   upload_single_file,
 } = require("../services/FileUpload");
+
+const { create_project } = require("../models/project");
 const {
   get_customer,
+  get_customer_by_id,
   post_customer,
   delete_customer,
   get_customer_paginate,
   update_customer,
-  get_customer_by_id,
-} = require("../models/customer");
+} = require("./customerController");
 
 module.exports = {
   // API users
@@ -86,45 +88,26 @@ module.exports = {
   },
   // API customer
   api_get_all_customer: async (req, res) => {
-    try {
-      const data = await get_customer();
-      res.status(200).json({
-        error: 0,
-        results: data,
-      });
-    } catch (error) {
-      console.error(error); // Log the error for debugging
-      res.status(500).json({
-        error: 1,
-        message: "An error occurred while fetching the home page data.",
-      });
-    }
+    const results = await get_customer();
+    res.send(results);
   },
   api_get_customer_by_id: async (req, res) => {
-    const data = await get_customer_by_id(req.params.id);
-    res.status(200).json({
-      error: data.error,
-      results: data.data,
-      message: data.message,
-    });
+    const data = await get_customer_by_id(req.query.id);
+    res.send(data);
   },
   api_post_customer: async (req, res) => {
     const data_customer = req.body?.data ? JSON.parse(req.body.data) : req.body;
     if (req.body?.data) {
       const results_create_customer_list = await post_customer(req, res, true);
-      res.status(200).json(results_create_customer_list);
+      res.send(results_create_customer_list);
     } else {
       const results_create_customer = await post_customer(req, res, false);
-      res.status(200).json(results_create_customer);
+      res.send(results_create_customer);
     }
   },
   api_delete_customer: async (req, res) => {
     const results = await delete_customer(req, res);
-    res.status(200).json({
-      error: results.error,
-      message: results.message,
-      data: results.success,
-    });
+    res.send(results);
   },
   api_get_customer_paginate: async (req, res) => {
     const results = await get_customer_paginate(req, res);
@@ -133,5 +116,10 @@ module.exports = {
   api_put_customer: async (req, res) => {
     const results = await update_customer(req, res);
     res.send(results);
+  },
+  // API project
+  api_post_project: async (req, res) => {
+    const results = await create_project(req, res);
+    res.send(false);
   },
 };
