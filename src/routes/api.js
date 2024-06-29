@@ -8,6 +8,9 @@ const {
   api_get_all_customer,
   api_post_customer,
   api_delete_customer,
+  api_get_customer_paginate,
+  api_put_customer,
+  api_get_customer_by_id,
 } = require("../controllers/apiController");
 
 const apiRouter = express.Router();
@@ -20,7 +23,10 @@ apiRouter.delete("/user", api_delete_user_with_id);
 apiRouter.post("/upload", api_post_upload_multiple_file);
 // API customer
 apiRouter.get("/customer", api_get_all_customer);
+apiRouter.get("/customer_paginate", api_get_customer_paginate);
 apiRouter.post("/customer", api_post_customer);
 apiRouter.post("/customer_list", api_post_customer);
 apiRouter.delete("/customer", api_delete_customer);
+apiRouter.put("/customer", api_put_customer);
+apiRouter.get("/customer_id", api_get_customer_by_id);
 module.exports = apiRouter;

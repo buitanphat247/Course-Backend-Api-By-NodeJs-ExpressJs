@@ -1,28 +1,36 @@
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
+const mongooseTimestamp = require("mongoose-timestamp");
+const mongooseDelete = require("mongoose-delete");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
-  age: {
-    type: Number,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 const user_collection = mongoose.model("UserMange", userSchema);
-
+userSchema.plugin(mongooseDelete, {
+  deletedAt: true,
+  overrideMethods: "all",
+});
 module.exports = {
-  create_new_user: async () => {
+  get_data_home_page: async () => {
     try {
       const data = await user_collection.find({});
       return data;
@@ -30,19 +38,20 @@ module.exports = {
       return false;
     }
   },
-  get_data_home_page: async (id) => {
+  delete_user: async (id) => {
     try {
       await user_collection.findOneAndDelete({ _id: id });
     } catch (error) {
+      
       return false;
     }
   },
-  delete_user: async (data) => {
+  create_new_user: async (data) => {
     try {
       const new_user = new user_collection({
         username: data.username,
         email: data.email,
-        phoneNumber: data.phone,
+        phone: data.phone,
         age: data.age,
       });
       const saved_user = await new_user.save();
@@ -67,7 +76,7 @@ module.exports = {
           $set: {
             username: data.username,
             email: data.email,
-            phoneNumber: data.phone,
+            phone: data.phone,
             age: data.age,
           },
         }
@@ -75,4 +84,5 @@ module.exports = {
       return results;
     } catch (error) {}
   },
+  user_collection,
 };

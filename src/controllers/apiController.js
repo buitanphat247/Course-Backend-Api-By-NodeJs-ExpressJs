@@ -12,6 +12,9 @@ const {
   get_customer,
   post_customer,
   delete_customer,
+  get_customer_paginate,
+  update_customer,
+  get_customer_by_id,
 } = require("../models/customer");
 
 module.exports = {
@@ -97,6 +100,14 @@ module.exports = {
       });
     }
   },
+  api_get_customer_by_id: async (req, res) => {
+    const data = await get_customer_by_id(req.params.id);
+    res.status(200).json({
+      error: data.error,
+      results: data.data,
+      message: data.message,
+    });
+  },
   api_post_customer: async (req, res) => {
     const data_customer = req.body?.data ? JSON.parse(req.body.data) : req.body;
     if (req.body?.data) {
@@ -114,5 +125,13 @@ module.exports = {
       message: results.message,
       data: results.success,
     });
+  },
+  api_get_customer_paginate: async (req, res) => {
+    const results = await get_customer_paginate(req, res);
+    res.send(results);
+  },
+  api_put_customer: async (req, res) => {
+    const results = await update_customer(req, res);
+    res.send(results);
   },
 };

@@ -16,7 +16,7 @@ const create_customer = async (req, res, customer_collection) => {
     }).save();
     return {
       error: 0,
-      message: "Upload success",
+      message: "Create customer success",
       success: data,
     };
   } catch (error) {
@@ -56,7 +56,7 @@ const create_customer_list = async (req, res, customer_collection) => {
   }
   return {
     error: data_failed.length,
-    message: "Upload success",
+    message: "Create customer success",
     success: data_success,
   };
 };
