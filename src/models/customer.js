@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
-const { upload_multiple_files } = require("../services/FileUpload");
+const {
+  create_customer,
+  create_customer_list,
+} = require("../services/CreateCustomer");
 
 const customerSchema = new mongoose.Schema(
   {
@@ -15,28 +18,20 @@ const customerSchema = new mongoose.Schema(
 );
 const customer_collection = mongoose.model("customer", customerSchema);
 
-const create_new_customer = async (req, res) => {
-  try {
-    const results = await upload_multiple_files(req, res);
-    const data = await new customer_collection({
-      username: req.body.username,
-      address: req.body.address,
-      phone: req.body.phone,
-      email: req.body.email,
-      image: results.data_succes.path,
-      description: req.body.desc,
-      age: req.body.age,
-    }).save();
-    return {
-      error: 0,
-      data: data,
-    };
-  } catch (error) {
-    return {
-      error: 1,
-      message: error,
-    };
-  }
+module.exports = {
+  get_customer: async () => {
+    try {
+      const data = await customer_collection.find({});
+      return data;
+    } catch (error) {
+      return false;
+    }
+  },
+  post_customer: async (req, res, check_array) => {
+    if (check_array === false) {
+      return await create_customer(req, res, customer_collection);
+    } else {
+      return await create_customer_list(req, res, customer_collection);
+    }
+  },
 };
-
-module.exports = { create_new_customer };

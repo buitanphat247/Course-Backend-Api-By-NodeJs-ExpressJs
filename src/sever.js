@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/", webRoutes);
 app.use("/v1/api/", apiRouter);
 configViewEngine(app);
-
+app.use(bodyParser.json());
 (async () => {
   try {
     // test connection
