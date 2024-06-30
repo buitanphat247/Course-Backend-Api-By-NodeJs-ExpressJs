@@ -32,7 +32,7 @@ app.use(bodyParser.json());
     //   description: "buitanphat",
     //   age: 12,
     // }).save();
-    app.listen(port, hostname, () => {
+    app.listen(port, "0.0.0.0", () => {
       console.log(`Backend app listening on port ${port}`);
     });
   } catch (error) {
